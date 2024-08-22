@@ -3,11 +3,12 @@ const dateEl =document.getElementById("date")
 const tempEl=document.getElementById("temp")
 const windEl = document.getElementById("wind")
 const humidityEl = document.getElementById("humidity")
-const forcastContainer = document.getElementById("container")
+const forecastContainer = document.getElementById("container")
 const apiKey= "bfa77fa36fc4303a153bdbe837177e79"
 const url = "https://api.openweathermap.org"
 const searchInput = document.getElementById("searchbar")
-
+const latEl =document.getElementById("lat")
+const lonEl= document.getElementById("lon")
 
 document.getElementById('submit').addEventListener("click",searchweather)
 function searchweather(){
@@ -22,12 +23,23 @@ dateEl.innerText=data.list[0].dt_txt
 tempEl.innerText=data.list[0].main.temp
 windEl.innerText=data.list[0].wind.speed
 humidityEl.innerText=data.list[0].main.humidity
+latEl.innerText=data.city.coord.lat
+lonEl.innerText=data.city.coord.lon
 
-// forcast.innerText=data.city.name
-// forcast.innerText=data.list[0].dt_txt
-// forcast.innerText=data.list[0].main.temp
-// forcast.innerText=data.list[0].wind.speed
-// forcast.innerText=data.list[0].main.humidity
+
+for(let i=0;i<5;i++){
+    const forecast =data.list[i*8]
+console.log(forecast)
+const fivedays=document.createElement("p")
+fivedays.id=`${i+1}`
+ fivedays.innerHTML=`
+ <h1>${forecast.dt_txt}</h1>
+ <div>${forecast.main.temp}</div>
+<div>${forecast.wind.speed}</div>
+ <div>${forecast.main.humidity}</div>
+`
+forecastContainer.appendChild(fivedays)
+}
 })
 
 // function fivedayForcast(daily){
@@ -40,7 +52,13 @@ humidityEl.innerText=data.list[0].main.humidity
 
 function fetchTheWeather(search) {
 const apiUrl = `${url}/geo/1.0/direct?=${search}&limit=5&appid=${apiKey}`
-
+fetch(apiUrl).then(function(res){
+    return res.json()
+}).then(function(data){
+    console.log(data)
+latEl.innerText=data.city.coord.lat
+lonEl.innerText=data.city.coord.lon
+})
 }
 function handleSearch(e){
 console.log("event", event)
@@ -48,4 +66,4 @@ e.preventDefault()
 const search= searchInput.value
 console.log("search",search)
 }
-handleSearch()
+document.getElementById("searchform").addEventListener("submit",handleSearch)

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>weatherboard</title>
+    <link rel="stylesheet" href="stlye.css">
 </head>
 
 <body>
@@ -11,14 +12,14 @@
         <h1>weatherboard</h1>
     </header>
     <aside>
-
-    </aside>
-    <main>
-
-        <form> 
+ <form id="searchform"> 
             <input type="text" id="searchbar"/>
             <button id="submit" onClick="handleSearch">search</button>
         </form>
+    </aside>
+    <main>
+
+       
 
         <h2 id="city">
 
@@ -36,6 +37,12 @@
         <h6 id="humidity">
 
         </h6>
+
+        <p id="lat">
+
+        </p>
+
+        <p id="lon"></p>
 
     </main>
     <footer>
